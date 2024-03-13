@@ -29,21 +29,29 @@ public class VenueHireSystem {
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
     // TODO implement this method
-    if(venueName == null || venueName.isEmpty()){
+    if (venueName == null || venueName.isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage("venue");
       return;
     }
 
     try {
       capacity = Integer.valueOf(capacityInput);
+      if (capacity <= 0) {
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
+        return;
+      }
     } catch (NumberFormatException e) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "integer");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity");
       return;
     }
     try {
       hireFee = Integer.valueOf(hireFeeInput);
+      if (hireFee <= 0) {
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hirefee", " positive");
+        return;
+      }
     } catch (NumberFormatException e) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hirefee", "integer");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hirefee");
       return;
     }
     Venuestore venue = new Venuestore(venueName, venueCode, capacity, hireFee);
