@@ -13,40 +13,47 @@ public class VenueHireSystem {
 
   private ArrayList<Venuestore> venues = new ArrayList<Venuestore>();
 
-  public VenueHireSystem() {
-    // TODO implement this method
-
-  }
+  public VenueHireSystem() {}
 
   public void printVenues() {
-    // TODO implement this method
+
     int listSize = venues.size();
 
     if (listSize > 0 && listSize == 1) {
-        MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
-        MessageCli.VENUE_ENTRY.printMessage(venues.get(0).venueName, venues.get(0).venueCode, String.valueOf(venues.get(0).capacity), String.valueOf(venues.get(0).hireFee));
-    } 
-    else if (listSize > 1) {
+      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
+      MessageCli.VENUE_ENTRY.printMessage(
+          venues.get(0).venueName,
+          venues.get(0).venueCode,
+          String.valueOf(venues.get(0).capacity),
+          String.valueOf(venues.get(0).hireFee));
+    } else if (listSize > 1) {
       MessageCli.NUMBER_VENUES.printMessage("are", String.valueOf(listSize), "s");
       for (int i = 0; i < listSize; i++) {
-        MessageCli.VENUE_ENTRY.printMessage(venues.get(i).venueName, venues.get(i).venueCode, String.valueOf(venues.get(i).capacity), String.valueOf(venues.get(i).hireFee));
+        MessageCli.VENUE_ENTRY.printMessage(
+            venues.get(i).venueName,
+            venues.get(i).venueCode,
+            String.valueOf(venues.get(i).capacity),
+            String.valueOf(venues.get(i).hireFee));
       }
-    } 
-    else if (listSize <= 0) {
+    } else if (listSize <= 0) {
       MessageCli.NO_VENUES.printMessage();
-    }
-    
-    else if (listSize <= 0) {
+    } else if (listSize <= 0) {
       MessageCli.NO_VENUES.printMessage();
     }
   }
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    // TODO implement this method
     if (venueName == null || venueName.isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage("venue");
       return;
+    }
+
+    for (int i = 0; i < venues.size(); i++) {
+      if (venues.get(i).venueCode.equals(venueCode)) {
+        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venueName);
+        return;
+      }
     }
 
     try {
@@ -79,35 +86,19 @@ public class VenueHireSystem {
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
   }
 
-  public void setSystemDate(String dateInput) {
-    // TODO implement this method
-  }
+  public void setSystemDate(String dateInput) {}
 
-  public void printSystemDate() {
-    // TODO implement this method
-  }
+  public void printSystemDate() {}
 
-  public void makeBooking(String[] options) {
-    // TODO implement this method
-  }
+  public void makeBooking(String[] options) {}
 
-  public void printBookings(String venueCode) {
-    // TODO implement this method
-  }
+  public void printBookings(String venueCode) {}
 
-  public void addCateringService(String bookingReference, CateringType cateringType) {
-    // TODO implement this method
-  }
+  public void addCateringService(String bookingReference, CateringType cateringType) {}
 
-  public void addServiceMusic(String bookingReference) {
-    // TODO implement this method
-  }
+  public void addServiceMusic(String bookingReference) {}
 
-  public void addServiceFloral(String bookingReference, FloralType floralType) {
-    // TODO implement this method
-  }
+  public void addServiceFloral(String bookingReference, FloralType floralType) {}
 
-  public void viewInvoice(String bookingReference) {
-    // TODO implement this method
-  }
+  public void viewInvoice(String bookingReference) {}
 }
