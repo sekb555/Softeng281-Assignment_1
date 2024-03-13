@@ -20,7 +20,9 @@ public class VenueHireSystem {
 
   public void printVenues() {
     // TODO implement this method
-    if (venues.size() > 0) {
+    if (venues.size() > 0 && venues.size() == 1) {
+        MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
+        MessageCli.VENUE_ENTRY.printMessage(venues.get(0).venueName, venues.get(0).venueCode, String.valueOf(venues.get(0).capacity), String.valueOf(venues.get(0).hireFee));
     } else if (venues.size() <= 0) {
       MessageCli.NO_VENUES.printMessage();
     }
@@ -41,17 +43,17 @@ public class VenueHireSystem {
         return;
       }
     } catch (NumberFormatException e) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "");
       return;
     }
     try {
       hireFee = Integer.valueOf(hireFeeInput);
       if (hireFee <= 0) {
-        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hirefee", " positive");
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", " positive");
         return;
       }
     } catch (NumberFormatException e) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hirefee");
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
       return;
     }
     Venuestore venue = new Venuestore(venueName, venueCode, capacity, hireFee);
