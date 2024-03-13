@@ -1,42 +1,46 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
-import java.util.ArrayList;
 
 public class VenueHireSystem {
-  
-  public String venueName;
-  public String venueCode;
-  public int capacity;
-  public int hireFee;
 
-  public ArrayList<Venuestore> venues = new ArrayList<Venuestore>();
+  private String venueName;
+  private String venueCode;
+  private int capacity;
+  private int hireFee;
+
+  private ArrayList<Venuestore> venues = new ArrayList<Venuestore>();
 
   public VenueHireSystem() {
     // TODO implement this method
 
   }
-  
 
   public void printVenues() {
     // TODO implement this method
     if (venues.size() > 0) {
-    } 
-    else if (venues.size() <= 0){
-          MessageCli.NO_VENUES.printMessage();
+    } else if (venues.size() <= 0) {
+      MessageCli.NO_VENUES.printMessage();
     }
   }
 
-  public void createVenue(String venueName, String venueCode, String capacityInput, String hireFeeInput) {
+  public void createVenue(
+      String venueName, String venueCode, String capacityInput, String hireFeeInput) {
     // TODO implement this method
-    try{
+    if(venueName == null || venueName.isEmpty()){
+      MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage("venue");
+      return;
+    }
+
+    try {
       capacity = Integer.valueOf(capacityInput);
     } catch (NumberFormatException e) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", "integer");
       return;
     }
-    try{
+    try {
       hireFee = Integer.valueOf(hireFeeInput);
     } catch (NumberFormatException e) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hirefee", "integer");

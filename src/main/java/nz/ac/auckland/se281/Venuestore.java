@@ -7,7 +7,7 @@ public class Venuestore {
   public int capacity;
   public int hireFee;
 
-  public Venuestore(String venueName, String venueCode, int capacity, int hireFee){
+  public Venuestore(String venueName, String venueCode, int capacity, int hireFee) {
     this.venueName = venueName;
     this.venueCode = venueCode;
     this.capacity = capacity;
