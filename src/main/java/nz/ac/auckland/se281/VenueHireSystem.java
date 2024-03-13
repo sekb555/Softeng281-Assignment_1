@@ -20,10 +20,23 @@ public class VenueHireSystem {
 
   public void printVenues() {
     // TODO implement this method
-    if (venues.size() > 0 && venues.size() == 1) {
+    int listSize = venues.size();
+
+    if (listSize > 0 && listSize == 1) {
         MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
         MessageCli.VENUE_ENTRY.printMessage(venues.get(0).venueName, venues.get(0).venueCode, String.valueOf(venues.get(0).capacity), String.valueOf(venues.get(0).hireFee));
-    } else if (venues.size() <= 0) {
+    } 
+    else if (listSize > 1) {
+      MessageCli.NUMBER_VENUES.printMessage("are", String.valueOf(listSize), "s");
+      for (int i = 0; i < listSize; i++) {
+        MessageCli.VENUE_ENTRY.printMessage(venues.get(i).venueName, venues.get(i).venueCode, String.valueOf(venues.get(i).capacity), String.valueOf(venues.get(i).hireFee));
+      }
+    } 
+    else if (listSize <= 0) {
+      MessageCli.NO_VENUES.printMessage();
+    }
+    
+    else if (listSize <= 0) {
       MessageCli.NO_VENUES.printMessage();
     }
   }
