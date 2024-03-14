@@ -101,7 +101,10 @@ public class VenueHireSystem {
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
   }
 
-  public void setSystemDate(String dateInput) {}
+  public void setSystemDate(String dateInput) {
+    sysDate = dateInput;
+    MessageCli.DATE_SET.printMessage(dateInput);
+  }
 
   public void printSystemDate() {
     if (sysDate == null || sysDate.isEmpty()) {
