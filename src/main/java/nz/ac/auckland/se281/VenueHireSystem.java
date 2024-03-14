@@ -1,6 +1,8 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
@@ -18,15 +20,28 @@ public class VenueHireSystem {
   public void printVenues() {
 
     int listSize = venues.size();
+    ArrayList<String> nums = new ArrayList<String>();
+    Collections.addAll(nums,"zero","one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
 
-    if (listSize > 0 && listSize == 1) {
-      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
-      MessageCli.VENUE_ENTRY.printMessage(
-          venues.get(0).venueName,
-          venues.get(0).venueCode,
-          String.valueOf(venues.get(0).capacity),
-          String.valueOf(venues.get(0).hireFee));
-    } else if (listSize > 1) {
+    if (listSize == 1) {
+      MessageCli.NUMBER_VENUES.printMessage("is", nums.get(1), "");
+      for (int i = 0; i < listSize; i++){
+        MessageCli.VENUE_ENTRY.printMessage(
+            venues.get(i).venueName,
+            venues.get(i).venueCode,
+            String.valueOf(venues.get(i).capacity),
+            String.valueOf(venues.get(i).hireFee));
+      }
+    }else if (listSize > 1 && listSize <= 9) {
+        MessageCli.NUMBER_VENUES.printMessage("are", nums.get(listSize), "s");
+        for (int i = 0; i < listSize; i++){
+          MessageCli.VENUE_ENTRY.printMessage(
+              venues.get(i).venueName,
+              venues.get(i).venueCode,
+              String.valueOf(venues.get(i).capacity),
+              String.valueOf(venues.get(i).hireFee));
+        }
+    } else if (listSize >= 10) {
       MessageCli.NUMBER_VENUES.printMessage("are", String.valueOf(listSize), "s");
       for (int i = 0; i < listSize; i++) {
         MessageCli.VENUE_ENTRY.printMessage(
@@ -37,10 +52,8 @@ public class VenueHireSystem {
       }
     } else if (listSize <= 0) {
       MessageCli.NO_VENUES.printMessage();
-    } else if (listSize <= 0) {
-      MessageCli.NO_VENUES.printMessage();
     }
-  }
+    }
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
