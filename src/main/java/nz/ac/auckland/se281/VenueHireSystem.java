@@ -118,6 +118,9 @@ public class VenueHireSystem {
     if (sysDate == null || sysDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
+    }else if(venues.size() == 0){
+      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+      return;
     }
   }
 
