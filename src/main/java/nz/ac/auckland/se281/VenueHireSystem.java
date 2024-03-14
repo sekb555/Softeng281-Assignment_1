@@ -115,13 +115,33 @@ public class VenueHireSystem {
   }
 
   public void makeBooking(String[] options) {
+
+    String Code = options[0];
+    String date = options[1];
+    String email = options[2];
+    String numAttend = options[3];
+    String bookRef = BookingReferenceGenerator.generateBookingReference();
+    String Venue = null;
+    
+    for (int i = 0; i < venues.size(); i++) {
+      if (venues.get(i).venueCode.equals(Code)){
+        Venue = venues.get(i).venueName;
+      }
+    }
+
     if (sysDate == null || sysDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
     }else if(venues.size() == 0){
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
+    }else {
+      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, Venue, date, numAttend);
     }
+
+  
+    
+
   }
 
   public void printBookings(String venueCode) {}
