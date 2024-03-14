@@ -14,6 +14,7 @@ public class VenueHireSystem {
   public String sysDate;
 
   private ArrayList<Venuestore> venues = new ArrayList<Venuestore>();
+  private ArrayList<bookingstore> bookings = new ArrayList<bookingstore>();
 
   public VenueHireSystem() {}
 
@@ -122,7 +123,14 @@ public class VenueHireSystem {
     String numAttend = options[3];
     String bookRef = BookingReferenceGenerator.generateBookingReference();
     String Venue = null;
-    
+
+    bookingstore booking = new bookingstore(bookRef, Code, date, numAttend, email);
+    booking.Code = Code;
+    booking.date = date;
+    booking.email = email;
+    booking.numAttend = numAttend;
+    booking.bookRef = bookRef;
+
     for (int i = 0; i < venues.size(); i++) {
       if (venues.get(i).venueCode.equals(Code)){
         Venue = venues.get(i).venueName;
