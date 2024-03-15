@@ -2,6 +2,8 @@ package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.time.LocalDate;
+
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
@@ -114,8 +116,14 @@ public class VenueHireSystem {
 
   public void makeBooking(String[] options) {
 
-    String Code = options[0];
     String date = options[1];
+    String[] dateSplit = date.split("/");
+    int day = Integer.valueOf(dateSplit[0]);
+    int month = Integer.valueOf(dateSplit[1]);
+    int year = Integer.valueOf(dateSplit[2]);
+    LocalDate bookDate = LocalDate.of(year, month, day);
+
+    String Code = options[0];
     String email = options[2];
     String numAttend = options[3];
     String bookRef = BookingReferenceGenerator.generateBookingReference();
@@ -137,9 +145,9 @@ public class VenueHireSystem {
       MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, Venue, date, numAttend);
     }
 
-    bookingstore booking = new bookingstore(bookRef, Code, date, numAttend, email);
+    bookingstore booking = new bookingstore(bookRef, Code, bookDate, numAttend, email);
     booking.Code = Code;
-    booking.date = date;
+    booking.date = bookDate;
     booking.email = email;
     booking.numAttend = numAttend;
     booking.bookRef = bookRef;
