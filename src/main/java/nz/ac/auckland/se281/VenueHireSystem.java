@@ -7,14 +7,11 @@ import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
 
-  private String venueName;
-  private String venueCode;
   private int capacity;
   private int hireFee;
   public String sysDate;
 
   private ArrayList<Venuestore> venues = new ArrayList<Venuestore>();
-  private ArrayList<bookingstore> bookings = new ArrayList<bookingstore>();
 
   public VenueHireSystem() {}
 
@@ -124,13 +121,6 @@ public class VenueHireSystem {
     String bookRef = BookingReferenceGenerator.generateBookingReference();
     String Venue = null;
 
-    bookingstore booking = new bookingstore(bookRef, Code, date, numAttend, email);
-    booking.Code = Code;
-    booking.date = date;
-    booking.email = email;
-    booking.numAttend = numAttend;
-    booking.bookRef = bookRef;
-
     for (int i = 0; i < venues.size(); i++) {
       if (venues.get(i).venueCode.equals(Code)){
         Venue = venues.get(i).venueName;
@@ -147,7 +137,12 @@ public class VenueHireSystem {
       MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, Venue, date, numAttend);
     }
 
-  
+    bookingstore booking = new bookingstore(bookRef, Code, date, numAttend, email);
+    booking.Code = Code;
+    booking.date = date;
+    booking.email = email;
+    booking.numAttend = numAttend;
+    booking.bookRef = bookRef;
     
 
   }
