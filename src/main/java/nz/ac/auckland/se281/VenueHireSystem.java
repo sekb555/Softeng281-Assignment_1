@@ -129,10 +129,12 @@ public class VenueHireSystem {
     String numAttend = options[3];
     String bookRef = BookingReferenceGenerator.generateBookingReference();
     String Venue = null;
+    int capacity = 0;
 
     for (int i = 0; i < venues.size(); i++) {
       if (venues.get(i).venueCode.equals(Code)){
         Venue = venues.get(i).venueName;
+        capacity = venues.get(i).capacity;
       }
     }
 
@@ -151,6 +153,16 @@ public class VenueHireSystem {
       return;
     }else {
       MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, Venue, date, numAttend);
+    }
+
+    
+    int quarterCapacity = capacity/4;
+    if (Integer.valueOf(numAttend) <= (quarterCapacity)){
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(numAttend, String.valueOf(quarterCapacity), String.valueOf(capacity));
+      numAttend = String.valueOf(quarterCapacity);
+    }else if (Integer.valueOf(numAttend) > capacity){
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(numAttend, String.valueOf(capacity), String.valueOf(capacity));
+      numAttend = String.valueOf(capacity);
     }
 
     bookingstore booking = new bookingstore(bookRef, Code, bookDate, numAttend, email);
