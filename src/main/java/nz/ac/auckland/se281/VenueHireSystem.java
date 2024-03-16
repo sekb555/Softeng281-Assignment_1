@@ -12,6 +12,7 @@ public class VenueHireSystem {
   private int capacity;
   private int hireFee;
   public String sysDate;
+  private LocalDate date_System;
 
   private ArrayList<Venuestore> venues = new ArrayList<Venuestore>();
   private ArrayList<bookingstore> bookings = new ArrayList<bookingstore>();
@@ -105,6 +106,12 @@ public class VenueHireSystem {
   public void setSystemDate(String dateInput) {
     sysDate = dateInput;
     MessageCli.DATE_SET.printMessage(dateInput);
+    String[]dateSplit = sysDate.split("/");
+    int day = Integer.valueOf(dateSplit[0]);
+    int month = Integer.valueOf(dateSplit[1]);
+    int year = Integer.valueOf(dateSplit[2]);
+    date_System = LocalDate.of(year, month, day);
+
   }
 
   public void printSystemDate() {
@@ -117,12 +124,16 @@ public class VenueHireSystem {
 
   public void makeBooking(String[] options) {
 
+
+
     String date = options[1];
     String[] dateSplit = date.split("/");
     int day = Integer.valueOf(dateSplit[0]);
     int month = Integer.valueOf(dateSplit[1]);
     int year = Integer.valueOf(dateSplit[2]);
     LocalDate bookDate = LocalDate.of(year, month, day);
+
+
 
     String Code = options[0];
     String email = options[2];
@@ -140,6 +151,7 @@ public class VenueHireSystem {
       }
     }
 
+
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).date.equals(bookDate) && bookings.get(i).Code.equals(Code)){
           MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(Venue, date);
@@ -153,8 +165,11 @@ public class VenueHireSystem {
     }else if(venues.size() == 0){
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
-    }if (!codeExists){
+    }else if (!codeExists){
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(Code);
+      return;
+    }else if (bookDate.isBefore(date_System)) {
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(date, sysDate);
       return;
     }else {
       MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, Venue, date, numAttend);

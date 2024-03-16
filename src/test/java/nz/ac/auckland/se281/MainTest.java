@@ -720,6 +720,16 @@ public class MainTest {
 
       assertContains("Booking not made");
     }
+
+    public void T4_02() throws Exception {
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "25/05/2024", "client999@email.com", "20")));
+    }
   }
 
   private static final Object[] CREATE_NINE_VENUES =
