@@ -711,29 +711,14 @@ public class MainTest {
     @Test
     public void T4_01_add_your_own_tests_as_needed() throws Exception {
       runCommands(
-          CREATE_VENUE,
-          "'Frugal Fiesta Hall'",
-          "FFH",
-          "80",
-          "150", //
-          CREATE_VENUE,
-          "'Frujgal Fieslta Hall'",
-          "FFHs",
-          "880",
-          "1590",
-          CREATE_VENUE,
-          "'Frujgal Fiejsta Hall'",
-          "FFHd",
-          "880",
-          "1590",
-          CREATE_VENUE,
-          "'Frujgal Fifesta Hall'",
-          "FFHg",
-          "880",
-          "1590", //
-          PRINT_VENUES);
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("j", "28/05/2024", "client999@email.com", "20")));
 
-      assertContains("There are four venues in the system:");
+      assertContains("Booking not made");
     }
   }
 

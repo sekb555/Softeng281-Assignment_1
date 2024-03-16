@@ -131,10 +131,12 @@ public class VenueHireSystem {
     String Venue = null;
     int capacity = 0;
 
+    boolean codeExists = false;
     for (int i = 0; i < venues.size(); i++) {
       if (venues.get(i).venueCode.equals(Code)){
         Venue = venues.get(i).venueName;
         capacity = venues.get(i).capacity;
+        codeExists = true;
       }
     }
 
@@ -151,11 +153,15 @@ public class VenueHireSystem {
     }else if(venues.size() == 0){
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
+    }if (!codeExists){
+      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(Code);
+      return;
     }else {
       MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, Venue, date, numAttend);
     }
 
     
+
     int quarterCapacity = capacity/4;
     if (Integer.valueOf(numAttend) <= (quarterCapacity)){
       MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(numAttend, String.valueOf(quarterCapacity), String.valueOf(capacity));
