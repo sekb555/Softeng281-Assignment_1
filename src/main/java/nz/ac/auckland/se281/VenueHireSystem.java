@@ -14,6 +14,7 @@ public class VenueHireSystem {
   public String sysDate;
 
   private ArrayList<Venuestore> venues = new ArrayList<Venuestore>();
+  private ArrayList<bookingstore> bookings = new ArrayList<bookingstore>();
 
   public VenueHireSystem() {}
 
@@ -135,6 +136,13 @@ public class VenueHireSystem {
       }
     }
 
+    for (int i = 0; i < bookings.size(); i++) {
+      if (bookings.get(i).date.equals(bookDate) && bookings.get(i).Code.equals(Code)){
+          MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(Venue, date);
+          return;
+        }
+      }
+
     if (sysDate == null || sysDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
@@ -151,7 +159,7 @@ public class VenueHireSystem {
     booking.email = email;
     booking.numAttend = numAttend;
     booking.bookRef = bookRef;
-    
+    bookings.add(booking);
 
   }
 
