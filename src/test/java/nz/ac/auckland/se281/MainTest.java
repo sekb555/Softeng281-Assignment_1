@@ -721,6 +721,7 @@ public class MainTest {
       assertContains("Booking not made");
     }
 
+    @Test
     public void T4_02() throws Exception {
       runCommands(
           unpack(
@@ -729,6 +730,8 @@ public class MainTest {
               "26/02/2024", //
               MAKE_BOOKING,
               options("GGG", "25/05/2024", "client999@email.com", "20")));
+
+      assertContains("Booking not made: '25/05/2024' is in the past (system date is 26/02/2024).");
     }
   }
 

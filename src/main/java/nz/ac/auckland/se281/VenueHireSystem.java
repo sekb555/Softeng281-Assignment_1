@@ -125,7 +125,6 @@ public class VenueHireSystem {
   public void makeBooking(String[] options) {
 
 
-
     String date = options[1];
     String[] dateSplit = date.split("/");
     int day = Integer.valueOf(dateSplit[0]);
@@ -159,24 +158,6 @@ public class VenueHireSystem {
         }
       }
 
-    if (sysDate == null || sysDate.isEmpty()) {
-      MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
-      return;
-    }else if(venues.size() == 0){
-      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
-      return;
-    }else if (!codeExists){
-      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(Code);
-      return;
-    }else if (bookDate.isBefore(date_System)) {
-      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(date, sysDate);
-      return;
-    }else {
-      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, Venue, date, numAttend);
-    }
-
-    
-
     int quarterCapacity = capacity/4;
     if (Integer.valueOf(numAttend) <= (quarterCapacity)){
       MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(numAttend, String.valueOf(quarterCapacity), String.valueOf(capacity));
@@ -184,7 +165,32 @@ public class VenueHireSystem {
     }else if (Integer.valueOf(numAttend) > capacity){
       MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(numAttend, String.valueOf(capacity), String.valueOf(capacity));
       numAttend = String.valueOf(capacity);
+    }else {}
+
+
+
+    if (sysDate == null || sysDate.isEmpty()) {
+      MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
+      return;
+    }else if (
+      bookDate.getYear() < date_System.getYear() || 
+      bookDate.getMonthValue() < date_System.getMonthValue() || 
+      bookDate.getDayOfMonth() < date_System.getDayOfMonth()){
+      MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(date, sysDate);
+      return;
+    }else if(venues.size() == 0){
+      MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+      return;
+    }else if (!codeExists){
+      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(Code);
+      return;
+    }else {
+      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, Venue, date, numAttend);
     }
+
+    
+
+
 
     bookingstore booking = new bookingstore(bookRef, Code, bookDate, numAttend, email);
     booking.Code = Code;
