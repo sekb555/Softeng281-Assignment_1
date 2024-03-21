@@ -1,6 +1,7 @@
 package nz.ac.auckland.se281;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import nz.ac.auckland.se281.Types.CateringType;
@@ -16,6 +17,9 @@ public class VenueHireSystem {
  //creating arraylists to store venues and bookings
   private ArrayList<Venuestore> venues = new ArrayList<Venuestore>();
   private ArrayList<bookingstore> bookings = new ArrayList<bookingstore>();
+
+  //creating a date formatter
+  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 
   //constructor for the class
@@ -155,6 +159,10 @@ public class VenueHireSystem {
     int month = Integer.valueOf(dateSplit[1]);
     int year = Integer.valueOf(dateSplit[2]);
     LocalDate bookDate = LocalDate.of(year, month, day);
+    
+    //adding one day to the booking date for the next available date
+    LocalDate bookDateplus1 = bookDate.plusDays(1);
+    String nextDate = bookDateplus1.format(formatter);
 
     String Code = options[0];
     String email = options[2];
@@ -168,6 +176,7 @@ public class VenueHireSystem {
       if (venues.get(i).venueCode.equals(Code)) {
         Venue = venues.get(i).venueName;
         capacity = venues.get(i).capacity;
+        venues.get(i).setstrDate(nextDate);
         codeExists = true;
       }
     }
@@ -222,7 +231,7 @@ public class VenueHireSystem {
 
   //method to print all of the bookings for a specific venue
   public void printBookings(String venueCode) {}
-  
+
   public void addCateringService(String bookingReference, CateringType cateringType) {}
 
   public void addServiceMusic(String bookingReference) {}
