@@ -168,10 +168,6 @@ public class VenueHireSystem {
     int year = Integer.valueOf(dateSplit[2]);
     LocalDate bookDate = LocalDate.of(year, month, day);
 
-    //adding one day to the booking date for the next available date
-    LocalDate bookDateplus1 = bookDate.plusDays(1);
-    String nextDate = bookDateplus1.format(formatter);
-
     String Code = options[0];
     String email = options[2];
     String numAttend = options[3];
@@ -179,12 +175,27 @@ public class VenueHireSystem {
     String Venue = null;
     int capacity = 0;
 
+    //adding one day to the booking date for the next available date
+    LocalDate bookDateplus1 = bookDate.plusDays(1);
+    LocalDate bookDateminus1 = bookDate.minusDays(1);
+    String nextDate;
+    for (int i = 0; i < venues.size(); i++) {
+      if (venues.get(i).venueCode.equals(Code)){
+        if(venues.get(i).getLocalDate().isBefore(bookDateminus1)){
+        }else{
+          nextDate = bookDateplus1.format(formatter);
+          venues.get(i).setstrDate(nextDate);
+        }
+      }
+    }
+    
+    
+
     boolean codeExists = false;
     for (int i = 0; i < venues.size(); i++) {
       if (venues.get(i).venueCode.equals(Code)) {
         Venue = venues.get(i).venueName;
         capacity = venues.get(i).capacity;
-        venues.get(i).setstrDate(nextDate);
         codeExists = true;
       }
     }
@@ -212,9 +223,7 @@ public class VenueHireSystem {
     if (sysDate == null || sysDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
-    } else if (bookDate.getYear() < date_System.getYear()
-        || bookDate.getMonthValue() < date_System.getMonthValue()
-        || bookDate.getDayOfMonth() < date_System.getDayOfMonth()) {
+    } else if (bookDate.isBefore(date_System)) {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(date, sysDate);
       return;
     } else if (venues.size() == 0) {
