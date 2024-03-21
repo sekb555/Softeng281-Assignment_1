@@ -110,14 +110,17 @@ public class VenueHireSystem {
       return;
     }
 
-    //creating a new venue and adding input values to it
+    //creating a new venue and adding input values to it 
     Venuestore venue = new Venuestore(venueName, venueCode, capacity, hireFee);
     venue.venueName = venueName;
     venue.venueCode = venueCode;
     venue.capacity = capacity;
     venue.hireFee = hireFee;
+    //setting the date of the venue to the system date if it is set
+    if (sysDate != null && !sysDate.isEmpty()) {
+      venue.setstrDate(sysDate);
+    }
     venues.add(venue);
-
     //printing a success message
     MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
   }
@@ -235,7 +238,14 @@ public class VenueHireSystem {
   }
 
   //method to print all of the bookings for a specific venue
-  public void printBookings(String venueCode) {}
+  public void printBookings(String venueCode) {
+    for(int i = 0; i < bookings.size(); i++) {
+      if(bookings.get(i).Code.equals(venueCode)) {
+        return;
+      }
+    }
+    MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+  }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {}
 

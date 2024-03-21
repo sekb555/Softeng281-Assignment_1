@@ -35,6 +35,12 @@ public class Venuestore {
 
   //method to get the date of the venue in LocalDate format
   public LocalDate getLocalDate() {
-    return LocalDate.parse(strDate);
+    LocalDate datetypDate;
+    String[] dateSplit = strDate.split("/");
+    int day = Integer.valueOf(dateSplit[0]);
+    int month = Integer.valueOf(dateSplit[1]);
+    int year = Integer.valueOf(dateSplit[2]);
+    datetypDate = LocalDate.of(year, month, day);
+    return datetypDate;
   }
 }
