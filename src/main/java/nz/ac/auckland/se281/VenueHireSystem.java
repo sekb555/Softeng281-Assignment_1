@@ -244,10 +244,18 @@ public class VenueHireSystem {
       //if the venue code is found in the arraylist print the title of the venue
       if(venues.get(i).venueCode.equals(venueCode)) {
         MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venues.get(i).venueName);
+        int count = 0;
         //for loop goes through each value in bookings arraylist and prints the booking reference and date for each booking
+        if (bookings.size() == 0) {
+          MessageCli.PRINT_BOOKINGS_NONE.printMessage(venues.get(i).venueName);
+          return;
+        }
         for(int j = 0; j < bookings.size(); j++) {
           if(bookings.get(j).Code.equals(venueCode)) {
             MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(bookings.get(j).bookRef, bookings.get(j).date.format(formatter));
+            count++;
+          }else if(count == 0 && j == bookings.size() - 1){
+            MessageCli.PRINT_BOOKINGS_NONE.printMessage(venues.get(i).venueName);
           }
         }
         return;
