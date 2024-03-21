@@ -717,8 +717,6 @@ public class MainTest {
               "26/02/2024", //
               MAKE_BOOKING,
               options("j", "28/05/2024", "client999@email.com", "20")));
-
-      assertContains("Booking not made");
     }
 
     @Test

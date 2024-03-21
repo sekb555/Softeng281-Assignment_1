@@ -1,9 +1,8 @@
 package nz.ac.auckland.se281;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.time.LocalDate;
-
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
@@ -11,8 +10,9 @@ public class VenueHireSystem {
 
   private int capacity;
   private int hireFee;
-  public String sysDate;
+  private String sysDate;
   private LocalDate date_System;
+  private String aveDate = "null";
 
   private ArrayList<Venuestore> venues = new ArrayList<Venuestore>();
   private ArrayList<bookingstore> bookings = new ArrayList<bookingstore>();
@@ -33,7 +33,8 @@ public class VenueHireSystem {
             venues.get(i).venueName,
             venues.get(i).venueCode,
             String.valueOf(venues.get(i).capacity),
-            String.valueOf(venues.get(i).hireFee));
+            String.valueOf(venues.get(i).hireFee),
+            aveDate);
       }
     } else if (listSize > 1 && listSize <= 9) {
       MessageCli.NUMBER_VENUES.printMessage("are", nums.get(listSize), "s");
@@ -42,7 +43,8 @@ public class VenueHireSystem {
             venues.get(i).venueName,
             venues.get(i).venueCode,
             String.valueOf(venues.get(i).capacity),
-            String.valueOf(venues.get(i).hireFee));
+            String.valueOf(venues.get(i).hireFee),
+            aveDate);
       }
     } else if (listSize >= 10) {
       MessageCli.NUMBER_VENUES.printMessage("are", String.valueOf(listSize), "s");
@@ -51,7 +53,8 @@ public class VenueHireSystem {
             venues.get(i).venueName,
             venues.get(i).venueCode,
             String.valueOf(venues.get(i).capacity),
-            String.valueOf(venues.get(i).hireFee));
+            String.valueOf(venues.get(i).hireFee),
+            aveDate);
       }
     } else if (listSize <= 0) {
       MessageCli.NO_VENUES.printMessage();
@@ -93,6 +96,7 @@ public class VenueHireSystem {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
       return;
     }
+
     Venuestore venue = new Venuestore(venueName, venueCode, capacity, hireFee);
     venue.venueName = venueName;
     venue.venueCode = venueCode;
@@ -105,13 +109,13 @@ public class VenueHireSystem {
 
   public void setSystemDate(String dateInput) {
     sysDate = dateInput;
+    aveDate = dateInput;
     MessageCli.DATE_SET.printMessage(dateInput);
-    String[]dateSplit = sysDate.split("/");
+    String[] dateSplit = sysDate.split("/");
     int day = Integer.valueOf(dateSplit[0]);
     int month = Integer.valueOf(dateSplit[1]);
     int year = Integer.valueOf(dateSplit[2]);
     date_System = LocalDate.of(year, month, day);
-
   }
 
   public void printSystemDate() {
@@ -124,15 +128,12 @@ public class VenueHireSystem {
 
   public void makeBooking(String[] options) {
 
-
     String date = options[1];
     String[] dateSplit = date.split("/");
     int day = Integer.valueOf(dateSplit[0]);
     int month = Integer.valueOf(dateSplit[1]);
     int year = Integer.valueOf(dateSplit[2]);
     LocalDate bookDate = LocalDate.of(year, month, day);
-
-
 
     String Code = options[0];
     String email = options[2];
@@ -143,54 +144,49 @@ public class VenueHireSystem {
 
     boolean codeExists = false;
     for (int i = 0; i < venues.size(); i++) {
-      if (venues.get(i).venueCode.equals(Code)){
+      if (venues.get(i).venueCode.equals(Code)) {
         Venue = venues.get(i).venueName;
         capacity = venues.get(i).capacity;
         codeExists = true;
       }
     }
 
-
     for (int i = 0; i < bookings.size(); i++) {
-      if (bookings.get(i).date.equals(bookDate) && bookings.get(i).Code.equals(Code)){
-          MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(Venue, date);
-          return;
-        }
+      if (bookings.get(i).date.equals(bookDate) && bookings.get(i).Code.equals(Code)) {
+        MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(Venue, date);
+        return;
       }
+    }
 
-    int quarterCapacity = capacity/4;
-    if (Integer.valueOf(numAttend) <= (quarterCapacity)){
-      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(numAttend, String.valueOf(quarterCapacity), String.valueOf(capacity));
+    int quarterCapacity = capacity / 4;
+    if (Integer.valueOf(numAttend) <= (quarterCapacity)) {
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          numAttend, String.valueOf(quarterCapacity), String.valueOf(capacity));
       numAttend = String.valueOf(quarterCapacity);
-    }else if (Integer.valueOf(numAttend) > capacity){
-      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(numAttend, String.valueOf(capacity), String.valueOf(capacity));
+    } else if (Integer.valueOf(numAttend) > capacity) {
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          numAttend, String.valueOf(capacity), String.valueOf(capacity));
       numAttend = String.valueOf(capacity);
-    }else {}
-
-
+    } else {
+    }
 
     if (sysDate == null || sysDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
-    }else if (
-      bookDate.getYear() < date_System.getYear() || 
-      bookDate.getMonthValue() < date_System.getMonthValue() || 
-      bookDate.getDayOfMonth() < date_System.getDayOfMonth()){
+    } else if (bookDate.getYear() < date_System.getYear()
+        || bookDate.getMonthValue() < date_System.getMonthValue()
+        || bookDate.getDayOfMonth() < date_System.getDayOfMonth()) {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(date, sysDate);
       return;
-    }else if(venues.size() == 0){
+    } else if (venues.size() == 0) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
-    }else if (!codeExists){
+    } else if (!codeExists) {
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(Code);
       return;
-    }else {
+    } else {
       MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, Venue, date, numAttend);
     }
-
-    
-
-
 
     bookingstore booking = new bookingstore(bookRef, Code, bookDate, numAttend, email);
     booking.Code = Code;
@@ -199,7 +195,6 @@ public class VenueHireSystem {
     booking.numAttend = numAttend;
     booking.bookRef = bookRef;
     bookings.add(booking);
-
   }
 
   public void printBookings(String venueCode) {}
