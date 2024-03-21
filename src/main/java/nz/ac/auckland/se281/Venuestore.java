@@ -1,5 +1,8 @@
 package nz.ac.auckland.se281;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Venuestore {
 
   //initializing variables required in the entire class
@@ -8,6 +11,9 @@ public class Venuestore {
   public int capacity;
   public int hireFee;
   public String strDate = "TODO";
+
+  //creating a date formatter
+  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   //constructor for the class
   public Venuestore(String venueName, String venueCode, int capacity, int hireFee) {
@@ -25,5 +31,10 @@ public class Venuestore {
   //method to get the date of the venue
   public String getstrDate() {
     return strDate;
+  }
+
+  //method to get the date of the venue in LocalDate format
+  public LocalDate getLocalDate() {
+    return LocalDate.parse(strDate);
   }
 }

@@ -124,10 +124,7 @@ public class VenueHireSystem {
 
   //method to set the system date
   public void setSystemDate(String dateInput) {
-    //setting the date for all venues
-    for (int i = 0; i < venues.size(); i++) {
-      venues.get(i).setstrDate(dateInput);
-    }
+
     //setting the system date and seperating it into day, month and year and storing it in a LocalDate object
     sysDate = dateInput;
     MessageCli.DATE_SET.printMessage(dateInput);
@@ -136,7 +133,15 @@ public class VenueHireSystem {
     int month = Integer.valueOf(dateSplit[1]);
     int year = Integer.valueOf(dateSplit[2]);
     date_System = LocalDate.of(year, month, day);
-  }
+  
+
+      //setting the date for all venues
+      for (int i = 0; i < venues.size(); i++) {
+        if (venues.get(i).getstrDate().equals("TODO") || venues.get(i).getstrDate().isEmpty()|| venues.get(i).getLocalDate().isBefore(date_System)) {
+          venues.get(i).setstrDate(sysDate);
+        }
+      }
+    }
 
   //method to print the system date
   public void printSystemDate() {
@@ -159,7 +164,7 @@ public class VenueHireSystem {
     int month = Integer.valueOf(dateSplit[1]);
     int year = Integer.valueOf(dateSplit[2]);
     LocalDate bookDate = LocalDate.of(year, month, day);
-    
+
     //adding one day to the booking date for the next available date
     LocalDate bookDateplus1 = bookDate.plusDays(1);
     String nextDate = bookDateplus1.format(formatter);
