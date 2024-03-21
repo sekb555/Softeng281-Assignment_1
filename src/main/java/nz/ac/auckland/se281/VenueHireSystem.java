@@ -239,8 +239,17 @@ public class VenueHireSystem {
 
   //method to print all of the bookings for a specific venue
   public void printBookings(String venueCode) {
-    for(int i = 0; i < bookings.size(); i++) {
-      if(bookings.get(i).Code.equals(venueCode)) {
+    //for loop goes through each value in venues arraylist
+    for(int i = 0; i < venues.size(); i++) {
+      //if the venue code is found in the arraylist print the title of the venue
+      if(venues.get(i).venueCode.equals(venueCode)) {
+        MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venues.get(i).venueName);
+        //for loop goes through each value in bookings arraylist and prints the booking reference and date for each booking
+        for(int j = 0; j < bookings.size(); j++) {
+          if(bookings.get(j).Code.equals(venueCode)) {
+            MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(bookings.get(j).bookRef, bookings.get(j).date.format(formatter));
+          }
+        }
         return;
       }
     }
