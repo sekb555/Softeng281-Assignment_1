@@ -6,7 +6,7 @@ public class BookingStore {
 
   // initializing variables required in the entire class
   protected String bookRef;
-  protected String VenCode;
+  protected String venCode;
   protected LocalDate date;
   protected String numAttend;
   protected String email;
@@ -15,7 +15,7 @@ public class BookingStore {
   public BookingStore(
       String bookRef, String venueCode, LocalDate date, String numAttend, String email) {
     this.bookRef = bookRef;
-    this.VenCode = venueCode;
+    this.venCode = venueCode;
     this.date = date;
     this.numAttend = numAttend;
     this.email = email;

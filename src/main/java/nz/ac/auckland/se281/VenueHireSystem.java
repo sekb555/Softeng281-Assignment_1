@@ -13,7 +13,7 @@ public class VenueHireSystem {
   private int capacity;
   private int hireFee;
   private String sysDate;
-  private LocalDate System_Date;
+  private LocalDate system_Date;
 
   // creating arraylists to store venues and bookings
   private ArrayList<VenueStore> venues = new ArrayList<VenueStore>();
@@ -136,13 +136,13 @@ public class VenueHireSystem {
     int day = Integer.valueOf(dateSplit[0]);
     int month = Integer.valueOf(dateSplit[1]);
     int year = Integer.valueOf(dateSplit[2]);
-    System_Date = LocalDate.of(year, month, day);
+    system_Date = LocalDate.of(year, month, day);
 
     // setting the date for all venues
     for (int i = 0; i < venues.size(); i++) {
       if (venues.get(i).getstrDate().equals("TODO")
           || venues.get(i).getstrDate().isEmpty()
-          || venues.get(i).getLocalDate().isBefore(System_Date)) {
+          || venues.get(i).getLocalDate().isBefore(system_Date)) {
         venues.get(i).setstrDate(sysDate);
       }
     }
@@ -170,7 +170,7 @@ public class VenueHireSystem {
     int year = Integer.valueOf(dateSplit[2]);
     LocalDate bookDate = LocalDate.of(year, month, day);
 
-    String BookVenCode = options[0];
+    String bookVenCode = options[0];
     String email = options[2];
     String numAttend = options[3];
     String bookRef = BookingReferenceGenerator.generateBookingReference();
@@ -182,7 +182,7 @@ public class VenueHireSystem {
     LocalDate bookDateminus1 = bookDate.minusDays(1);
     String nextDate;
     for (int i = 0; i < venues.size(); i++) {
-      if (venues.get(i).venueCode.equals(BookVenCode)) {
+      if (venues.get(i).venueCode.equals(bookVenCode)) {
         if (venues.get(i).getLocalDate().isBefore(bookDateminus1)) {
         } else {
           nextDate = bookDateplus1.format(formatter);
@@ -193,7 +193,7 @@ public class VenueHireSystem {
 
     boolean codeExists = false;
     for (int i = 0; i < venues.size(); i++) {
-      if (venues.get(i).venueCode.equals(BookVenCode)) {
+      if (venues.get(i).venueCode.equals(bookVenCode)) {
         StrVenName = venues.get(i).venueName;
         capacity = venues.get(i).capacity;
         codeExists = true;
@@ -201,7 +201,7 @@ public class VenueHireSystem {
     }
 
     for (int i = 0; i < bookings.size(); i++) {
-      if (bookings.get(i).date.equals(bookDate) && bookings.get(i).VenCode.equals(BookVenCode)) {
+      if (bookings.get(i).date.equals(bookDate) && bookings.get(i).venCode.equals(bookVenCode)) {
         MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(StrVenName, date);
         return;
       }
@@ -226,22 +226,22 @@ public class VenueHireSystem {
     if (sysDate == null || sysDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
-    } else if (bookDate.isBefore(System_Date)) {
+    } else if (bookDate.isBefore(system_Date)) {
       MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(date, sysDate);
       return;
     } else if (venues.size() == 0) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
       return;
     } else if (!codeExists) {
-      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(BookVenCode);
+      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(bookVenCode);
       return;
     } else {
       MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, StrVenName, date, numAttend);
     }
 
     // creating a new booking and adding input values to it
-    BookingStore booking = new BookingStore(bookRef, BookVenCode, bookDate, numAttend, email);
-    booking.VenCode = BookVenCode;
+    BookingStore booking = new BookingStore(bookRef, bookVenCode, bookDate, numAttend, email);
+    booking.venCode = bookVenCode;
     booking.date = bookDate;
     booking.email = email;
     booking.numAttend = numAttend;
@@ -264,7 +264,7 @@ public class VenueHireSystem {
           return;
         }
         for (int j = 0; j < bookings.size(); j++) {
-          if (bookings.get(j).VenCode.equals(venueCode)) {
+          if (bookings.get(j).venCode.equals(venueCode)) {
             MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(
                 bookings.get(j).bookRef, bookings.get(j).date.format(formatter));
             count++;
@@ -278,7 +278,12 @@ public class VenueHireSystem {
     MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
   }
 
-  public void addCateringService(String bookingReference, CateringType cateringType) {}
+  public void addCateringService(String bookingReference, CateringType cateringType) {
+    if(bookings.size() == 0) {
+      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
+      return;
+    }
+  }
 
   public void addServiceMusic(String bookingReference) {}
 
