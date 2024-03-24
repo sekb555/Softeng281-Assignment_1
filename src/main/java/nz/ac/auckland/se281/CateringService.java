@@ -14,8 +14,10 @@ public class CateringService extends AddService {
   }
 
   public static int cateringCost() {
-
     return costPP;
   }
 
+  public int sumTotCost() {
+    return this.totCost + this.caterCost;
+  }
 }
