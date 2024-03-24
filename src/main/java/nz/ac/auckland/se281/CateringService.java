@@ -4,7 +4,18 @@ import nz.ac.auckland.se281.Types.CateringType;
 
 public class CateringService extends AddService {
 
-  public CateringService(CateringType type, String bookRef) {
-    super("Catering Service", type, bookRef);
+  protected static int costPP;
+
+  public CateringService(CateringType type, String bookRef, int attendees) {
+    super("Catering Service", bookRef, String.valueOf(type), attendees);
+
+    this.bookRef = bookRef;
+    costPP = type.getCostPerPerson();
   }
+
+  public static int cateringCost() {
+
+    return costPP;
+  }
+
 }

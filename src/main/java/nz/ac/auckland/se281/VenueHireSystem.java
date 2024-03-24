@@ -279,23 +279,26 @@ public class VenueHireSystem {
     MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
   }
 
+  // method to add a catering service to a booking
   public void addCateringService(String bookingReference, CateringType cateringType) {
-
+    String currentService = "Catering";
     if (bookings.size() == 0) {
-      MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
+      AddService.noBookRef(currentService, bookingReference);
       return;
     }
     int count = 0;
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
-        AddService service = new CateringService(cateringType, bookingReference);
+        AddService service =
+            new CateringService(
+                cateringType, bookingReference, Integer.valueOf(bookings.get(i).numAttend));
         services.add(service);
         MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
             "Catering (" + cateringType.getName() + ")", bookingReference);
         count++;
       }
       if (i == bookings.size() - 1 && count == 0) {
-        MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
+        AddService.noBookRef(currentService, bookingReference);
       }
     }
   }
@@ -304,5 +307,20 @@ public class VenueHireSystem {
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {}
 
-  public void viewInvoice(String bookingReference) {}
+  public void viewInvoice(String bookingReference) {
+    if (bookings.size() == 0) {
+      MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
+      return;
+    }
+    for (int i = 0; i < bookings.size(); i++) {
+      if (bookings.get(i).bookRef.equals(bookingReference)) {
+        for (int j = 0; j < services.size(); j++) {
+          if (services.get(j).bookRef.equals(bookingReference)) {
+            MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
+                services.get(j).getType(), String.valueOf(services.get(j).totCost));
+          }
+        }
+      }
+    }
+  }
 }
