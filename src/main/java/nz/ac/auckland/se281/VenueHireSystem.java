@@ -18,6 +18,7 @@ public class VenueHireSystem {
   // creating arraylists to store venues and bookings
   private ArrayList<VenueStore> venues = new ArrayList<VenueStore>();
   private ArrayList<BookingStore> bookings = new ArrayList<BookingStore>();
+  private ArrayList<AddService> services = new ArrayList<AddService>();
 
   // creating a date formatter
   private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -286,6 +287,13 @@ public class VenueHireSystem {
     }
     int count = 0;
     for (int i = 0; i < bookings.size(); i++) {
+      if (bookings.get(i).bookRef.equals(bookingReference)) {
+        AddService service = new CateringService(cateringType, bookingReference);
+        services.add(service);
+        MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+            "Catering (" + cateringType.getName() + ")", bookingReference);
+        count++;
+      }
       if (i == bookings.size() - 1 && count == 0) {
         MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Catering", bookingReference);
       }

@@ -742,37 +742,37 @@ public class MainTest {
               MAKE_BOOKING,
               options("GGG", "30/05/2024", "client999@email.com", "500"),
               PRINT_VENUES));
-              assertContains("There are 10 venues in the system:");
-              assertContains(
-                  "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
-                      + " 03/02/2024");
-              assertContains(
-                  "Comfy Corner Events Centre (CCEC) - 120 people - $500 base hire fee. Next available on"
-                      + " 03/02/2024");
-              assertContains(
-                  "Cozy Comforts Venue (CCV) - 200 people - $500 base hire fee. Next available on"
-                      + " 03/02/2024");
-              assertContains(
-                  "Charming Charm Hall (CCH) - 220 people - $500 base hire fee. Next available on"
-                      + " 03/02/2024");
-              assertContains(
-                  "Refined Radiance Venue (RRV) - 200 people - $500 base hire fee. Next available on"
-                      + " 03/02/2024");
-              assertContains(
-                  "Classy Celebration Venue (TGB) - 150 people - $1000 base hire fee. Next available on"
-                      + " 03/02/2024");
-              assertContains(
-                  "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
-                      + " 03/02/2024");
-              assertContains(
-                  "Exclusive Elegance Venue (EEV) - 350 people - $1500 base hire fee. Next available on"
-                      + " 03/02/2024");
-              assertContains(
-                  "Luxurious Legacy Hall (LLH) - 800 people - $2500 base hire fee. Next available on"
-                      + " 03/02/2024");
-              assertContains(
-                  "Majestic Monarch Mansion (MMM) - 1000 people - $2500 base hire fee. Next available on"
-                      + " 03/02/2024");
+      assertContains("There are 10 venues in the system:");
+      assertContains(
+          "Frugal Fiesta Hall (FFH) - 80 people - $250 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Comfy Corner Events Centre (CCEC) - 120 people - $500 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Cozy Comforts Venue (CCV) - 200 people - $500 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Charming Charm Hall (CCH) - 220 people - $500 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Refined Radiance Venue (RRV) - 200 people - $500 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Classy Celebration Venue (TGB) - 150 people - $1000 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Grand Gala Gardens (GGG) - 260 people - $1500 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Exclusive Elegance Venue (EEV) - 350 people - $1500 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Luxurious Legacy Hall (LLH) - 800 people - $2500 base hire fee. Next available on"
+              + " 03/02/2024");
+      assertContains(
+          "Majestic Monarch Mansion (MMM) - 1000 people - $2500 base hire fee. Next available on"
+              + " 03/02/2024");
     }
   }
 
