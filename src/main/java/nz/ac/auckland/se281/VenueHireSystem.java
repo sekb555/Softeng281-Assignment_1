@@ -364,22 +364,24 @@ public class VenueHireSystem {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
         // prints the top half of the invoice
         MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage();
+        // prints the venue hire cost for the specified booking
+        MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(
+            String.valueOf(bookings.get(i).venueCost));
         for (int j = 0; j < services.size(); j++) {
-          if (services.get(j).bookRef.equals(bookingReference)
-              && services.get(j).service.equals("Catering Service")) {
-            // prints the catering invoice for the specified booking
-            MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
-                services.get(j).getType(), String.valueOf(services.get(j).caterCost));
-          } else if (services.get(j).bookRef.equals(bookingReference)
-              && services.get(j).service.equals("Music Service")) {
-            // prints the music invoice for the specified booking
-            MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(
-                String.valueOf(services.get(j).musicCost));
-          } else if (services.get(j).bookRef.equals(bookingReference)
-              && services.get(j).service.equals("Floral Service")) {
-            // prints the floral invoice for the specified booking
-            MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
-                services.get(j).getType(), String.valueOf(services.get(j).floralCost));
+          if (services.get(j).bookRef.equals(bookingReference)) {
+            if (services.get(j).service.equals("Catering Service")) {
+              // prints the catering cost for the specified booking
+              MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
+                  services.get(j).getType(), String.valueOf(services.get(j).caterCost));
+            } else if (services.get(j).service.equals("Music Service")) {
+              // prints the music fee for the specified booking
+              MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(
+                  String.valueOf(services.get(j).musicCost));
+            } else if (services.get(j).service.equals("Floral Service")) {
+              // prints the floral cost for the specified booking
+              MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
+                  services.get(j).getType(), String.valueOf(services.get(j).floralCost));
+            }
           }
         }
         // prints the bottom half of the invoice for the specified booking
