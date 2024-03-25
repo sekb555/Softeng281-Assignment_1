@@ -292,9 +292,7 @@ public class VenueHireSystem {
     int count = 0;
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
-        AddService service =
-            new CateringService(
-                cateringType, bookingReference, Integer.valueOf(bookings.get(i).numAttend));
+        AddService service = new CateringService(cateringType, bookingReference, Integer.valueOf(bookings.get(i).numAttend));
         services.add(service);
         MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
             "Catering (" + cateringType.getName() + ")", bookingReference);
@@ -307,7 +305,16 @@ public class VenueHireSystem {
     }
   }
 
-  public void addServiceMusic(String bookingReference) {}
+  public void addServiceMusic(String bookingReference) {
+    String currentService = "Music";
+    if (bookings.size() == 0) {
+      AddService.noBookRef(currentService, bookingReference);
+      return;
+    }
+
+    AddService service = new MusicService(bookingReference);
+    services.add(service);
+  }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {}
 
@@ -322,16 +329,38 @@ public class VenueHireSystem {
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
         for (int j = 0; j < services.size(); j++) {
-          if (services.get(j).bookRef.equals(bookingReference)) {
+          if (services.get(j).bookRef.equals(bookingReference)
+              && services.get(j).service.equals("Catering Service")) {
             // prints the catering invoice for the specified booking
             MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
                 services.get(j).getType(), String.valueOf(services.get(j).caterCost));
-            bookings.get(i).setTotalCost(services.get(j).caterCost+bookings.get(i).venueCost);
+
+          } else if (services.get(j).bookRef.equals(bookingReference)
+              && services.get(j).service.equals("Music Service")) {
+            // prints the music invoice for the specified booking
+            MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(
+                String.valueOf(services.get(j).musicCost));
           }
         }
       }
-      //prints the bottom half of the invoice for the specified booking
-      MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(String.valueOf(bookings.get(i).getTotalCost()));
+      // prints the bottom half of the invoice for the specified booking
+      MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(
+          String.valueOf(sumTotCost(bookingReference)));
     }
+  }
+
+  public int sumTotCost(String bookingReference) {
+    int totCost = 0;
+    for (int j = 0; j < bookings.size(); j++) {
+      if (bookings.get(j).bookRef.equals(bookingReference)) {
+        totCost += bookings.get(j).venueCost;
+      }
+    }
+    for (int i = 0; i < services.size(); i++) {
+      if (services.get(i).bookRef.equals(bookingReference)) {
+        totCost += services.get(i).caterCost + services.get(i).musicCost;
+      }
+    }
+    return totCost;
   }
 }
