@@ -296,7 +296,6 @@ public class VenueHireSystem {
     // for loop goes through each value in bookings arraylist and add the catering
     // service to the
     // specified booking
-    int count = 0;
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
         AddService service = new CateringService(
@@ -304,10 +303,7 @@ public class VenueHireSystem {
         services.add(service);
         MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
             "Catering (" + cateringType.getName() + ")", bookingReference);
-        count++;
-      }
-      // if the booking reference is not found in the arraylist print a message
-      if (i == bookings.size() - 1 && count == 0) {
+      } else if (i == bookings.size() - 1) {
         AddService.noBookRef(currentService, bookingReference);
       }
     }
@@ -322,16 +318,12 @@ public class VenueHireSystem {
     // for loop goes through each value in bookings arraylist and add the music
     // service to the
     // specified booking
-    int count = 0;
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
         AddService service = new MusicService(bookingReference);
         services.add(service);
         MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
-        count++;
-      }
-      // if the booking reference is not found in the arraylist print a message
-      if (i == bookings.size() - 1 && count == 0) {
+      } else if (i == bookings.size() - 1) {
         AddService.noBookRef(currentService, bookingReference);
       }
     }
@@ -341,6 +333,19 @@ public class VenueHireSystem {
     if (bookings.size() == 0) {
       AddService.noBookRef("Floral", bookingReference);
       return;
+    }
+
+    // for loop checks if the booking reference is in the bookings arraylist and
+    // adds the floaral service to the specified booking
+    for (int i = 0; i < bookings.size(); i++) {
+      if (bookings.get(i).bookRef.equals(bookingReference)) {
+        AddService service = new FloralService(bookingReference, floralType);
+        services.add(service);
+        MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Floral (" + floralType.getName() + ")", bookingReference);
+        return;
+      } else if (i == bookings.size() - 1) {
+        AddService.noBookRef("Floral", bookingReference);
+      }
     }
   }
 
@@ -371,7 +376,7 @@ public class VenueHireSystem {
         }
         // prints the bottom half of the invoice for the specified booking
         MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(
-        String.valueOf(sumTotCost(bookingReference)));
+            String.valueOf(sumTotCost(bookingReference)));
         return;
       }
     }
@@ -379,17 +384,19 @@ public class VenueHireSystem {
 
   public int sumTotCost(String bookingReference) {
     int totCost = 0;
-    // for loop goes through each value in bookings arraylist and adds the cost of the venue to the total cost
+    // for loop goes through each value in bookings arraylist and adds the cost of
+    // the venue to the total cost
     for (int j = 0; j < bookings.size(); j++) {
       if (bookings.get(j).bookRef.equals(bookingReference)) {
         totCost += bookings.get(j).venueCost;
       }
     }
-    
-    // for loop goes through each value in services arraylist and adds the cost of each service for the given booking reference
+
+    // for loop goes through each value in services arraylist and adds the cost of
+    // each service for the given booking reference
     for (int i = 0; i < services.size(); i++) {
       if (services.get(i).bookRef.equals(bookingReference)) {
-        totCost += services.get(i).caterCost + services.get(i).musicCost + services.get(i).floralCost;
+        totCost += services.get(i).caterCost + services.get(i).musicCost;
       }
     }
     return totCost;

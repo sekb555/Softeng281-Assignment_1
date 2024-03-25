@@ -28,12 +28,4 @@ public class BookingStore {
     this.venueCost = venueCost;
     this.sysDate = sysDate;
   }
-
-  public void setTotalCost(int totalCost) {
-    this.totalCost = totalCost;
-  }
-
-  public int getTotalCost() {
-    return totalCost;
-  }
 }
