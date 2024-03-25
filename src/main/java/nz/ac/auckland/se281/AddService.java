@@ -3,7 +3,7 @@ package nz.ac.auckland.se281;
 public abstract class AddService {
 
   protected String service, bookRef, strType;
-  protected int caterCost, musicCost, totCost, attendees = 0;
+  protected int caterCost, musicCost, floralCost, attendees = 0;
 
   public AddService(String service, String bookRef, String type, int attendees) {
     this.service = service;
@@ -13,6 +13,9 @@ public abstract class AddService {
       this.caterCost = attendees * Types.CateringType.valueOf(type).getCostPerPerson();
     }else if (service.equals("Music Service")) {
       this.musicCost = 500;
+    }else if (service.equals("Floral Service")) {
+      this.strType = Types.FloralType.valueOf(type).getName();
+      this.floralCost = Types.FloralType.valueOf(type).getCost();
     }
   }
 

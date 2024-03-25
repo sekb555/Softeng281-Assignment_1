@@ -24,18 +24,21 @@ public class VenueHireSystem {
   private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   // constructor for the class
-  public VenueHireSystem() {}
+  public VenueHireSystem() {
+  }
 
   // method to print all of the venues currently in the system
   public void printVenues() {
 
-    // creating an arraylist to store the numbers from 0 to 9 in string format(5 = "five" etc.)
+    // creating an arraylist to store the numbers from 0 to 9 in string format(5 =
+    // "five" etc.)
     int listSize = venues.size();
     ArrayList<String> nums = new ArrayList<String>();
     Collections.addAll(
         nums, "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
 
-    // printing the venues in the system with the appropriate message based on the number of venues
+    // printing the venues in the system with the appropriate message based on the
+    // number of venues
     if (listSize == 1) {
       MessageCli.NUMBER_VENUES.printMessage("is", nums.get(1), "");
       for (int i = 0; i < listSize; i++) {
@@ -126,7 +129,8 @@ public class VenueHireSystem {
   // method to set the system date
   public void setSystemDate(String dateInput) {
 
-    // setting the system date and seperating it into day, month and year and storing it in a
+    // setting the system date and seperating it into day, month and year and
+    // storing it in a
     // LocalDate object
     sysDate = dateInput;
     MessageCli.DATE_SET.printMessage(dateInput);
@@ -213,7 +217,8 @@ public class VenueHireSystem {
       }
     }
 
-    // checking if the number of attendees is less than a quarter of the venue capacity or more than
+    // checking if the number of attendees is less than a quarter of the venue
+    // capacity or more than
     // the venue capacity and changing it accordingly
     int quarterCapacity = capacity / 4;
     if (Integer.valueOf(numAttend) <= (quarterCapacity)) {
@@ -227,7 +232,8 @@ public class VenueHireSystem {
     } else {
     }
 
-    // checking if the date is set, the date is in the past, there are venues in the system and the
+    // checking if the date is set, the date is in the past, there are venues in the
+    // system and the
     // venue code exists
     if (sysDate == null || sysDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
@@ -246,8 +252,7 @@ public class VenueHireSystem {
     }
 
     // creating a new booking and adding input values to it
-    BookingStore booking =
-        new BookingStore(bookRef, bookVenCode, bookDate, numAttend, email, bookVenCost, systemDate);
+    BookingStore booking = new BookingStore(bookRef, bookVenCode, bookDate, numAttend, email, bookVenCost, systemDate);
     bookings.add(booking);
   }
 
@@ -259,7 +264,8 @@ public class VenueHireSystem {
       if (venues.get(i).venueCode.equals(venueCode)) {
         MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venues.get(i).venueName);
         int count = 0;
-        // for loop goes through each value in bookings arraylist and prints the booking reference
+        // for loop goes through each value in bookings arraylist and prints the booking
+        // reference
         // and date for each booking
         if (bookings.size() == 0) {
           MessageCli.PRINT_BOOKINGS_NONE.printMessage(venues.get(i).venueName);
@@ -287,14 +293,14 @@ public class VenueHireSystem {
       AddService.noBookRef(currentService, bookingReference);
       return;
     }
-    // for loop goes through each value in bookings arraylist and add the catering service to the
+    // for loop goes through each value in bookings arraylist and add the catering
+    // service to the
     // specified booking
     int count = 0;
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
-        AddService service =
-            new CateringService(
-                cateringType, bookingReference, Integer.valueOf(bookings.get(i).numAttend));
+        AddService service = new CateringService(
+            cateringType, bookingReference, Integer.valueOf(bookings.get(i).numAttend));
         services.add(service);
         MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
             "Catering (" + cateringType.getName() + ")", bookingReference);
@@ -313,7 +319,8 @@ public class VenueHireSystem {
       AddService.noBookRef(currentService, bookingReference);
       return;
     }
-    // for loop goes through each value in bookings arraylist and add the music service to the
+    // for loop goes through each value in bookings arraylist and add the music
+    // service to the
     // specified booking
     int count = 0;
     for (int i = 0; i < bookings.size(); i++) {
@@ -330,7 +337,12 @@ public class VenueHireSystem {
     }
   }
 
-  public void addServiceFloral(String bookingReference, FloralType floralType) {}
+  public void addServiceFloral(String bookingReference, FloralType floralType) {
+    if (bookings.size() == 0) {
+      AddService.noBookRef("Floral", bookingReference);
+      return;
+    }
+  }
 
   // method to view the invoice for a specific booking
   public void viewInvoice(String bookingReference) {
@@ -339,7 +351,8 @@ public class VenueHireSystem {
       return;
     }
 
-    // for loop for going through each value in bookings arraylist and services arraylist until the
+    // for loop for going through each value in bookings arraylist and services
+    // arraylist until the booking reference given is found
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
         for (int j = 0; j < services.size(); j++) {
@@ -356,24 +369,27 @@ public class VenueHireSystem {
                 String.valueOf(services.get(j).musicCost));
           }
         }
+        // prints the bottom half of the invoice for the specified booking
+        MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(
+        String.valueOf(sumTotCost(bookingReference)));
+        return;
       }
-      // prints the bottom half of the invoice for the specified booking
-      MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(
-          String.valueOf(sumTotCost(bookingReference)));
-      return;
     }
   }
 
   public int sumTotCost(String bookingReference) {
     int totCost = 0;
+    // for loop goes through each value in bookings arraylist and adds the cost of the venue to the total cost
     for (int j = 0; j < bookings.size(); j++) {
       if (bookings.get(j).bookRef.equals(bookingReference)) {
         totCost += bookings.get(j).venueCost;
       }
     }
+    
+    // for loop goes through each value in services arraylist and adds the cost of each service for the given booking reference
     for (int i = 0; i < services.size(); i++) {
       if (services.get(i).bookRef.equals(bookingReference)) {
-        totCost += services.get(i).caterCost + services.get(i).musicCost;
+        totCost += services.get(i).caterCost + services.get(i).musicCost + services.get(i).floralCost;
       }
     }
     return totCost;
