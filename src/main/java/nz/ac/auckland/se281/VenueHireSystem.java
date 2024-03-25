@@ -362,6 +362,8 @@ public class VenueHireSystem {
     // arraylist until the booking reference given is found
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
+        // prints the top half of the invoice
+        MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage();
         for (int j = 0; j < services.size(); j++) {
           if (services.get(j).bookRef.equals(bookingReference)
               && services.get(j).service.equals("Catering Service")) {
