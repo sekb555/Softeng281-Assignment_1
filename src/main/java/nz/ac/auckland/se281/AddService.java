@@ -2,8 +2,13 @@ package nz.ac.auckland.se281;
 
 public abstract class AddService {
 
-  protected String service, bookRef, strType;
-  protected int caterCost, musicCost, floralCost, attendees = 0;
+  protected String service;
+  protected String bookRef;
+  protected String strType;
+  protected int caterCost = 0;
+  protected int musicCost = 0;
+  protected int floralCost = 0;
+  protected int attendees = 0;
 
   // constructor for the AddService class that creates the different services
   public AddService(String service, String bookRef, String type, int attendees) {

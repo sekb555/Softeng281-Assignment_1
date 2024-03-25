@@ -24,8 +24,7 @@ public class VenueHireSystem {
   private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   // constructor for the class
-  public VenueHireSystem() {
-  }
+  public VenueHireSystem() {}
 
   // method to print all of the venues currently in the system
   public void printVenues() {
@@ -252,7 +251,8 @@ public class VenueHireSystem {
     }
 
     // creating a new booking and adding input values to it
-    BookingStore booking = new BookingStore(bookRef, bookVenCode, bookDate, numAttend, email, bookVenCost, systemDate);
+    BookingStore booking =
+        new BookingStore(bookRef, bookVenCode, bookDate, numAttend, email, bookVenCost, systemDate);
     bookings.add(booking);
   }
 
@@ -298,8 +298,9 @@ public class VenueHireSystem {
     // specified booking
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
-        AddService service = new CateringService(
-            cateringType, bookingReference, Integer.valueOf(bookings.get(i).numAttend));
+        AddService service =
+            new CateringService(
+                cateringType, bookingReference, Integer.valueOf(bookings.get(i).numAttend));
         services.add(service);
         MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
             "Catering (" + cateringType.getName() + ")", bookingReference);
@@ -341,7 +342,8 @@ public class VenueHireSystem {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
         AddService service = new FloralService(bookingReference, floralType);
         services.add(service);
-        MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Floral (" + floralType.getName() + ")", bookingReference);
+        MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
+            "Floral (" + floralType.getName() + ")", bookingReference);
         return;
       } else if (i == bookings.size() - 1) {
         AddService.noBookRef("Floral", bookingReference);
@@ -366,12 +368,16 @@ public class VenueHireSystem {
             // prints the catering invoice for the specified booking
             MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
                 services.get(j).getType(), String.valueOf(services.get(j).caterCost));
-
           } else if (services.get(j).bookRef.equals(bookingReference)
               && services.get(j).service.equals("Music Service")) {
             // prints the music invoice for the specified booking
             MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(
                 String.valueOf(services.get(j).musicCost));
+          } else if (services.get(j).bookRef.equals(bookingReference)
+              && services.get(j).service.equals("Floral Service")) {
+            // prints the floral invoice for the specified booking
+            MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
+                services.get(j).getType(), String.valueOf(services.get(j).floralCost));
           }
         }
         // prints the bottom half of the invoice for the specified booking
@@ -396,7 +402,8 @@ public class VenueHireSystem {
     // each service for the given booking reference
     for (int i = 0; i < services.size(); i++) {
       if (services.get(i).bookRef.equals(bookingReference)) {
-        totCost += services.get(i).caterCost + services.get(i).musicCost;
+        totCost +=
+            services.get(i).caterCost + services.get(i).musicCost + services.get(i).floralCost;
       }
     }
     return totCost;

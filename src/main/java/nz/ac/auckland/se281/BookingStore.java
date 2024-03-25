@@ -4,9 +4,13 @@ import java.time.LocalDate;
 
 public class BookingStore {
 
-  // initializing variables required in the entire class
-  protected String bookRef, venCode, numAttend, email;
-  protected LocalDate sysDate, bookDate;
+  // initializing variables required for the class
+  protected String bookRef;
+  protected String venCode;
+  protected String numAttend;
+  protected String email;
+  protected LocalDate sysDate;
+  protected LocalDate bookDate;
   protected int venueCost;
   protected int totalCost;
 
