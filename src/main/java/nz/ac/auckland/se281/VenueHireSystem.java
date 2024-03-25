@@ -252,7 +252,8 @@ public class VenueHireSystem {
 
     // creating a new booking and adding input values to it
     BookingStore booking =
-        new BookingStore(bookRef, bookVenCode, bookDate, numAttend, email, bookVenCost, systemDate, strVenName);
+        new BookingStore(
+            bookRef, bookVenCode, bookDate, numAttend, email, bookVenCost, systemDate, strVenName);
     bookings.add(booking);
   }
 
@@ -310,15 +311,24 @@ public class VenueHireSystem {
     }
   }
 
+  // method to add a music service to a booking
   public void addServiceMusic(String bookingReference) {
     String currentService = "Music";
     if (bookings.size() == 0) {
       AddService.noBookRef(currentService, bookingReference);
       return;
     }
+
+    // checks that there aren't more then 1 music service for the same booking
+    for (int i = 0; i < services.size(); i++) {
+      if (services.get(i).service.equals("Music Service")
+          && services.get(i).bookRef.equals(bookingReference)) {
+        return;
+      }
+    }
+
     // for loop goes through each value in bookings arraylist and add the music
-    // service to the
-    // specified booking
+    // service to the specified booking
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
         AddService service = new MusicService(bookingReference);
@@ -330,6 +340,7 @@ public class VenueHireSystem {
     }
   }
 
+  // method to add a floral service to a booking
   public void addServiceFloral(String bookingReference, FloralType floralType) {
     if (bookings.size() == 0) {
       AddService.noBookRef("Floral", bookingReference);
@@ -369,8 +380,7 @@ public class VenueHireSystem {
             bookings.get(i).sysDate.format(formatter),
             bookings.get(i).bookDate.format(formatter),
             bookings.get(i).numAttend,
-            bookings.get(i).venName
-        );
+            bookings.get(i).venName);
 
         // prints the venue hire cost for the specified booking
         MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(
