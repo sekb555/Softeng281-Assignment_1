@@ -7,5 +7,4 @@ public class MusicService extends AddService {
     super("Music Service", bookRef, "Music", 1);
     this.bookRef = bookRef;
   }
-
 }

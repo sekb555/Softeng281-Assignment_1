@@ -13,5 +13,4 @@ public class CateringService extends AddService {
     this.bookRef = bookRef;
     costPerPerson = type.getCostPerPerson();
   }
-
 }

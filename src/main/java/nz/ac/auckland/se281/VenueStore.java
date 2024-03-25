@@ -33,8 +33,7 @@ public class VenueStore {
   public LocalDate getLocalDate() {
     LocalDate datetypDate;
     // splitting the date into day, month and year as interger values and combining
-    // them to form a
-    // LocalDate
+    // them to form a LocalDate
     String[] dateSplit = strDate.split("/");
     int day = Integer.valueOf(dateSplit[0]);
     int month = Integer.valueOf(dateSplit[1]);

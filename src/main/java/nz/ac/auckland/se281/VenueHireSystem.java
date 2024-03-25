@@ -171,10 +171,10 @@ public class VenueHireSystem {
     int year = Integer.valueOf(dateSplit[2]);
     LocalDate bookDate = LocalDate.of(year, month, day);
 
+    // assigning the input values to variables
     String bookVenCode = options[0];
     String email = options[2];
     String numAttend = options[3];
-    String bookRef = BookingReferenceGenerator.generateBookingReference();
     String strVenName = null;
     int bookVenCost = 0;
     int capacity = 0;
@@ -182,20 +182,6 @@ public class VenueHireSystem {
     for (int i = 0; i < venues.size(); i++) {
       if (venues.get(i).venueCode.equals(bookVenCode)) {
         bookVenCost = venues.get(i).hireFee;
-      }
-    }
-
-    // adding one day to the booking date for the next available date
-    LocalDate bookDateplus1 = bookDate.plusDays(1);
-    LocalDate bookDateminus1 = bookDate.minusDays(1);
-    String nextDate;
-    for (int i = 0; i < venues.size(); i++) {
-      if (venues.get(i).venueCode.equals(bookVenCode)) {
-        if (venues.get(i).getLocalDate().isBefore(bookDateminus1)) {
-        } else {
-          nextDate = bookDateplus1.format(formatter);
-          venues.get(i).setstrDate(nextDate);
-        }
       }
     }
 
@@ -216,24 +202,8 @@ public class VenueHireSystem {
       }
     }
 
-    // checking if the number of attendees is less than a quarter of the venue
-    // capacity or more than
-    // the venue capacity and changing it accordingly
-    int quarterCapacity = capacity / 4;
-    if (Integer.valueOf(numAttend) <= (quarterCapacity)) {
-      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
-          numAttend, String.valueOf(quarterCapacity), String.valueOf(capacity));
-      numAttend = String.valueOf(quarterCapacity);
-    } else if (Integer.valueOf(numAttend) > capacity) {
-      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
-          numAttend, String.valueOf(capacity), String.valueOf(capacity));
-      numAttend = String.valueOf(capacity);
-    } else {
-    }
-
     // checking if the date is set, the date is in the past, there are venues in the
-    // system and the
-    // venue code exists
+    // system and the venue code exists
     if (sysDate == null || sysDate.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
       return;
@@ -246,15 +216,43 @@ public class VenueHireSystem {
     } else if (!codeExists) {
       MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(bookVenCode);
       return;
-    } else {
-      MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, strVenName, date, numAttend);
+    }
+    // variables for checking what the next available date should be for the venue
+    LocalDate bookDateplus1 = bookDate.plusDays(1);
+    LocalDate bookDateminus1 = bookDate.minusDays(1);
+
+    String nextDate;
+    for (int i = 0; i < venues.size(); i++) {
+      if (venues.get(i).venueCode.equals(bookVenCode)) {
+        if (venues.get(i).getLocalDate().isBefore(bookDateminus1)) {
+        } else {
+          nextDate = bookDateplus1.format(formatter);
+          venues.get(i).setstrDate(nextDate);
+        }
+      }
     }
 
+    // checking if the number of attendees is less than a quarter of the venue
+    // capacity or more than the venue capacity and changing it accordingly
+    int quarterCapacity = capacity / 4;
+    if (Integer.valueOf(numAttend) < (quarterCapacity)) {
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          numAttend, String.valueOf(quarterCapacity), String.valueOf(capacity));
+      numAttend = String.valueOf(quarterCapacity);
+    } else if (Integer.valueOf(numAttend) > capacity) {
+      MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+          numAttend, String.valueOf(capacity), String.valueOf(capacity));
+      numAttend = String.valueOf(capacity);
+    }
+
+    String bookRef = BookingReferenceGenerator.generateBookingReference();
     // creating a new booking and adding input values to it
     BookingStore booking =
         new BookingStore(
             bookRef, bookVenCode, bookDate, numAttend, email, bookVenCost, systemDate, strVenName);
     bookings.add(booking);
+    // printing a success message
+    MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, strVenName, date, numAttend);
   }
 
   // method to print all of the bookings for a specific venue
@@ -410,6 +408,7 @@ public class VenueHireSystem {
     }
   }
 
+  // method to sum the total cost of a booking
   public int sumTotCost(String bookingReference) {
     int totCost = 0;
     // for loop goes through each value in bookings arraylist and adds the cost of
