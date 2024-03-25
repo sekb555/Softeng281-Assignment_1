@@ -9,6 +9,7 @@ public class BookingStore {
   protected String venCode;
   protected String numAttend;
   protected String email;
+  protected String venName;
   protected LocalDate sysDate;
   protected LocalDate bookDate;
   protected int venueCost;
@@ -22,7 +23,8 @@ public class BookingStore {
       String numAttend,
       String email,
       int venueCost,
-      LocalDate sysDate) {
+      LocalDate sysDate,
+      String venName) {
 
     this.bookRef = bookRef;
     this.venCode = venueCode;
@@ -31,5 +33,6 @@ public class BookingStore {
     this.email = email;
     this.venueCost = venueCost;
     this.sysDate = sysDate;
+    this.venName = venName;
   }
 }

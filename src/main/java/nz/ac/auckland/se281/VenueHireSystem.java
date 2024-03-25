@@ -252,7 +252,7 @@ public class VenueHireSystem {
 
     // creating a new booking and adding input values to it
     BookingStore booking =
-        new BookingStore(bookRef, bookVenCode, bookDate, numAttend, email, bookVenCost, systemDate);
+        new BookingStore(bookRef, bookVenCode, bookDate, numAttend, email, bookVenCost, systemDate, strVenName);
     bookings.add(booking);
   }
 
@@ -363,7 +363,15 @@ public class VenueHireSystem {
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
         // prints the top half of the invoice
-        MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage();
+        MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
+            bookingReference,
+            bookings.get(i).email,
+            bookings.get(i).sysDate.format(formatter),
+            bookings.get(i).bookDate.format(formatter),
+            bookings.get(i).numAttend,
+            bookings.get(i).venName
+        );
+
         // prints the venue hire cost for the specified booking
         MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(
             String.valueOf(bookings.get(i).venueCost));
