@@ -3,10 +3,7 @@ package nz.ac.auckland.se281;
 public abstract class AddService {
 
   protected String service, bookRef, strType;
-  protected int caterCost = 0;
-  protected int musicCost = 0;
-  protected int totCost = 0;
-  protected int attendees = 0;
+  protected int caterCost, musicCost, totCost, attendees = 0;
 
   public AddService(String service, String bookRef, String type, int attendees) {
     this.service = service;
@@ -19,7 +16,6 @@ public abstract class AddService {
     }
   }
 
-  
 
   public String getType() {
     return this.strType;

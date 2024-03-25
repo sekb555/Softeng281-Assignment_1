@@ -5,12 +5,8 @@ import java.time.LocalDate;
 public class BookingStore {
 
   // initializing variables required in the entire class
-  protected String bookRef;
-  protected String venCode;
-  protected LocalDate sysDate;
-  protected LocalDate bookDate;
-  protected String numAttend;
-  protected String email;
+  protected String bookRef, venCode, numAttend, email;
+  protected LocalDate sysDate, bookDate;
   protected int venueCost;
   protected int totalCost;
 
@@ -32,6 +28,7 @@ public class BookingStore {
     this.venueCost = venueCost;
     this.sysDate = sysDate;
   }
+
   public void setTotalCost(int totalCost) {
     this.totalCost = totalCost;
   }

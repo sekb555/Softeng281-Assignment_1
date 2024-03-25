@@ -292,7 +292,9 @@ public class VenueHireSystem {
     int count = 0;
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
-        AddService service = new CateringService(cateringType, bookingReference, Integer.valueOf(bookings.get(i).numAttend));
+        AddService service =
+            new CateringService(
+                cateringType, bookingReference, Integer.valueOf(bookings.get(i).numAttend));
         services.add(service);
         MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
             "Catering (" + cateringType.getName() + ")", bookingReference);
@@ -311,9 +313,21 @@ public class VenueHireSystem {
       AddService.noBookRef(currentService, bookingReference);
       return;
     }
-
-    AddService service = new MusicService(bookingReference);
-    services.add(service);
+    // for loop goes through each value in bookings arraylist and add the music service to the
+    // specified booking
+    int count = 0;
+    for (int i = 0; i < bookings.size(); i++) {
+      if (bookings.get(i).bookRef.equals(bookingReference)) {
+        AddService service = new MusicService(bookingReference);
+        services.add(service);
+        MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
+        count++;
+      }
+      // if the booking reference is not found in the arraylist print a message
+      if (i == bookings.size() - 1 && count == 0) {
+        AddService.noBookRef(currentService, bookingReference);
+      }
+    }
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {}
@@ -346,6 +360,7 @@ public class VenueHireSystem {
       // prints the bottom half of the invoice for the specified booking
       MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(
           String.valueOf(sumTotCost(bookingReference)));
+      return;
     }
   }
 
