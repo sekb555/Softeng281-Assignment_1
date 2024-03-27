@@ -24,7 +24,8 @@ public class VenueHireSystem {
   private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   // constructor for the class
-  public VenueHireSystem() {}
+  public VenueHireSystem() {
+  }
 
   // method to print all of the venues currently in the system
   public void printVenues() {
@@ -86,7 +87,7 @@ public class VenueHireSystem {
     // making sure that the venue code is unique
     for (int i = 0; i < venues.size(); i++) {
       if (venues.get(i).venueCode.equals(venueCode)) {
-        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venueName);
+        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venues.get(i).venueName);
         return;
       }
     }
@@ -247,9 +248,8 @@ public class VenueHireSystem {
 
     String bookRef = BookingReferenceGenerator.generateBookingReference();
     // creating a new booking and adding input values to it
-    BookingStore booking =
-        new BookingStore(
-            bookRef, bookVenCode, bookDate, numAttend, email, bookVenCost, systemDate, strVenName);
+    BookingStore booking = new BookingStore(
+        bookRef, bookVenCode, bookDate, numAttend, email, bookVenCost, systemDate, strVenName);
     bookings.add(booking);
     // printing a success message
     MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(bookRef, strVenName, date, numAttend);
@@ -297,9 +297,8 @@ public class VenueHireSystem {
     // specified booking
     for (int i = 0; i < bookings.size(); i++) {
       if (bookings.get(i).bookRef.equals(bookingReference)) {
-        AddService service =
-            new CateringService(
-                cateringType, bookingReference, Integer.valueOf(bookings.get(i).numAttend));
+        AddService service = new CateringService(
+            cateringType, bookingReference, Integer.valueOf(bookings.get(i).numAttend));
         services.add(service);
         MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
             "Catering (" + cateringType.getName() + ")", bookingReference);
@@ -423,8 +422,7 @@ public class VenueHireSystem {
     // each service for the given booking reference
     for (int i = 0; i < services.size(); i++) {
       if (services.get(i).bookRef.equals(bookingReference)) {
-        totCost +=
-            services.get(i).caterCost + services.get(i).musicCost + services.get(i).floralCost;
+        totCost += services.get(i).caterCost + services.get(i).musicCost + services.get(i).floralCost;
       }
     }
     return totCost;

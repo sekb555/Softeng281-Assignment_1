@@ -5,6 +5,7 @@ import nz.ac.auckland.se281.Types.FloralType;
 public class FloralService extends AddService {
 
   protected int floralCost = 0;
+
   // constructor for the FloralService class
   public FloralService(String bookRef, FloralType type) {
     super("Floral Service", bookRef, String.valueOf(type), 1);
