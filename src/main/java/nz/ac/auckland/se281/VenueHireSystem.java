@@ -222,9 +222,15 @@ public class VenueHireSystem {
     LocalDate bookDateplus1 = bookDate.plusDays(1);
     LocalDate bookDateminus1 = bookDate.minusDays(1);
 
+    LocalDate nextAveDate;
     String nextDate;
     for (int i = 0; i < venues.size(); i++) {
       if (venues.get(i).venueCode.equals(bookVenCode)) {
+        nextAveDate = venues.get(i).getLocalDate();
+        if (bookDate.isBefore(nextAveDate)) {
+          System.out.println("Booking not made: Date is not available");
+          return;
+        }
         if (venues.get(i).getLocalDate().isBefore(bookDateminus1)) {
         } else {
           nextDate = bookDateplus1.format(formatter);
@@ -262,10 +268,10 @@ public class VenueHireSystem {
       // if the venue code is found in the arraylist print the title of the venue
       if (venues.get(i).venueCode.equals(venueCode)) {
         MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venues.get(i).venueName);
+
         int count = 0;
         // for loop goes through each value in bookings arraylist and prints the booking
-        // reference
-        // and date for each booking
+        // reference and date for each booking
         if (bookings.size() == 0) {
           MessageCli.PRINT_BOOKINGS_NONE.printMessage(venues.get(i).venueName);
           return;
@@ -422,7 +428,9 @@ public class VenueHireSystem {
     // each service for the given booking reference
     for (int i = 0; i < services.size(); i++) {
       if (services.get(i).bookRef.equals(bookingReference)) {
-        totCost += services.get(i).caterCost + services.get(i).musicCost + services.get(i).floralCost;
+        totCost += services.get(i).caterCost +
+            services.get(i).musicCost +
+            services.get(i).floralCost;
       }
     }
     return totCost;
