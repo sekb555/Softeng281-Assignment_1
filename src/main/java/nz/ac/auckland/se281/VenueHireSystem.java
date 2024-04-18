@@ -308,6 +308,7 @@ public class VenueHireSystem {
         services.add(service);
         MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(
             "Catering (" + cateringType.getName() + ")", bookingReference);
+        return;
       } else if (i == bookings.size() - 1) {
         AddService.noBookRef(currentService, bookingReference);
       }
@@ -337,6 +338,7 @@ public class VenueHireSystem {
         AddService service = new MusicService(bookingReference);
         services.add(service);
         MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
+        return;
       } else if (i == bookings.size() - 1) {
         AddService.noBookRef(currentService, bookingReference);
       }
