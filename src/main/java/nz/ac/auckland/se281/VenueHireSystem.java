@@ -428,10 +428,9 @@ public class VenueHireSystem {
     // each service for the given booking reference
     for (int i = 0; i < services.size(); i++) {
       if (services.get(i).bookRef.equals(bookingReference)) {
-        int cCost = services.get(i).caterCost;
-        int mCost = services.get(i).musicCost;
-        int fCost = services.get(i).floralCost;
-        totCost += cCost+ mCost + fCost;
+        totCost += services.get(i).caterCost +
+            services.get(i).musicCost +
+            services.get(i).floralCost;
       }
     }
     return totCost;
