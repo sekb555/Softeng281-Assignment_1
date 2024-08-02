@@ -1,3 +1,3 @@
 # Assignment 1
 
-You will find instructions for this assignment on the course website.
+The first assignment that we completed in Softeng 281
